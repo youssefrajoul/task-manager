@@ -1,0 +1,6 @@
+{% extends "_base.html" %}
+{% block title %} Détail - {{ developer.first_name }} {{ developer.last_name }} {% endblock title %}
+{% block content %}
+    <p><Strong>Prénom : {{ developer.first_name }}</Strong></p>
+    <p><Strong>Nom de famille : {{ developer.last_name }}</Strong></p>
+{% endblock content %}
