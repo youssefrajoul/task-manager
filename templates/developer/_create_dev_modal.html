@@ -1,0 +1,26 @@
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+<!-- Ajout d'un bouton pour faire apparaître la boîte de dialogue -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add-dev-modal">
+    Add user
+</button>
+<!-- Ajout du modal contenant le formulaire -->
+<div class="modal fade " id="add-dev-modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">New developer</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'developer:create' %}" method="post">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div>
+                        <button class="btn btn-primary" type="submit">Créer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

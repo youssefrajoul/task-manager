@@ -3,20 +3,23 @@ from .models import Developer
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .forms import DeveloperForm
+from django.views.generic import DetailView, ListView
 
 
-def index(request):
-    context = {
-        'developers': Developer.objects.all(),
-        'form': DeveloperForm,
-    }
+class IndexView(ListView):
+    model = Developer
+    template_name = "developer/index.html"
+    context_object_name = 'developers'
 
-    return render(request, 'developer/index.html', context)
+    def get_context_data(self, **kwargs):
+        context = super(IndexView, self).get_context_data(**kwargs)
+        context['form'] = DeveloperForm
+        return context
 
 
-def detail(request, developer_id):
-    developer = get_object_or_404(Developer, pk=developer_id)
-    return render(request, 'developer/detail.html', {'developer': developer})
+class DevDetailView(DetailView):
+    model = Developer
+    template_name = 'developer/detail.html'
 
 
 def create(request):
