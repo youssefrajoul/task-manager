@@ -13,4 +13,14 @@
     {% else %}
         <p><strong>Il n'y a aucun développeur enregistré !</strong></p>
     {% endif %}
+    <form action="{% url 'developer:create' %}" method="post">
+        {% csrf_token %}
+
+{#        <label for="first_name">First name</label>#}
+{#        <input type="text" name="first_name" required>#}
+{#        <label for="last_name">Last name</label>#}
+{#        <input type="text" name="last_name" required>#}
+        {{ form }}
+        <button type="submit">Create</button>
+    </form>
 {% endblock content %}
