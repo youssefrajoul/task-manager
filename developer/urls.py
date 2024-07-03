@@ -8,4 +8,5 @@ urlpatterns = [
     path('', IndexView.as_view(), name='index'),
     path('<int:pk>/', DevDetailView.as_view(), name='detail'),
     path('create/', views.create, name='create'),
+    path('delete/<int:pk>', views.delete, name='delete'),
 ]

@@ -1,6 +1,40 @@
 {% extends "_base.html" %}
 {% block title %} Détail - {{ developer.first_name }} {{ developer.last_name }} {% endblock title %}
 {% block content %}
-    <p><Strong>Prénom : {{ developer.first_name }}</Strong></p>
-    <p><Strong>Nom de famille : {{ developer.last_name }}</Strong></p>
+    <div class="mt-4 p-5 bg-white rounded">
+        <form action="{% url 'developer:delete' developer.id %}" method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-light btn-sm">
+                <i class="fa fa-trash"></i>
+            </button>
+        </form>
+        <h1>{{ developer.first_name }} {{ developer.last_name }} </h1>
+        <p>{{ developer.tasks.all|length }} task{{ developer.tasks.all|length|pluralize }} assigned</p>
+    </div>
+    <div class="container-sm">
+        {% if not developer.is_free %}
+            <ul class="list-group">
+                {% for task in developer.tasks.all %}
+                    <li class="list-group-item">
+                        <strong>{{ task.title }}!</strong> {{ task.description }}
+                    </li>
+                {% endfor %}
+            </ul>
+            <form action="{% url 'task:create' %}" method="post">
+                {% csrf_token %}
+                <label for="title">Title:</label><br>
+                <input type="text" id="title" name="title"><br>
+                <label for="description">Description:</label><br>
+                <input type="text" id="description" name="description"><br>
+                <input type="hidden" id="assignee" name="assignee" value="{{ developer.pk }}"><br>
+                <div>
+                    <button class="btn btn-primary" type="submit">Create</button>
+                </div>
+            </form>
+        {% else %}
+            <div class="alert alert-danger">
+                No Task for {{ developer.first_name }}.
+            </div>
+        {% endif %}
+    </div>
 {% endblock content %}

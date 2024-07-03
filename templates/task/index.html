@@ -1,0 +1,32 @@
+{% extends "_base.html" %}
+
+{% block title %} Task List {% endblock title %}
+
+{% block content %}
+    {% if tasks %}
+        <div class="container-sm l-3 d-flex flex-wrap border">
+            {% for task in tasks %}
+                <div class="card bg-primary m-2 p-1 rounded-lg" style="width:300px">
+                    <form action="{% url 'task:delete' task.id %}" method="post">
+                        {% csrf_token %}
+                        <button class="close" type="submit"><i class="fa fa-trash"></i></button>
+                    </form>
+                    <div class="card-title">
+                        {{ task.title }}
+                    </div>
+                    <div class="card-body">
+                        {{ task.description }}
+                    </div>
+                    <div class="card-footer">
+                        {{ task.assignee }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="container m-4">
+            <alert class="alert alert-warning">There is no Task</alert>
+        </div>
+    {% endif %}
+    {% include 'task/_create_task_modal.html' %}
+{% endblock content %}
