@@ -1,0 +1,30 @@
+{% extends "_base.html" %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="p-1 m-3 bg-light">
+            <p class="float-right"><a href={% url 'logout' %}><i class="fa fa-sign-out"></i></a></p>
+            <h1>
+                {{ user.first_name }} {{ user.last_name }}
+            </h1>
+        </div>
+
+        <div class="container-sm">
+            {% if user.tasks.all|length %}
+                <ul class="list-group fluid">
+                    {% for task in user.tasks.all %}
+                        <li class="list-group-item">
+                            <strong>{{ task.title }}</strong>
+                            {{ task.description }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <alert class="alert alert-warning">No Tasks</alert>
+            {% endif %}
+        </div>
+    {% else %}
+        <h1>Welcome to developers task manager</h1>
+        <a href={% url 'login' %}>Log in</a>
+    {% endif %}
+{% endblock content %}

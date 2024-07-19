@@ -14,3 +14,6 @@ class Task(models.Model):
 
     class Meta:
         db_table = 'task'
+        permissions = [
+            ('task_management', 'Can create, assign and delete tasks'),
+        ]

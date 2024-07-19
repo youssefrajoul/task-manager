@@ -1,0 +1,14 @@
+{% extends "_base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}GProject - login{% endblock title %}
+
+{% block content %}
+    <div class="container-sm p-3 mt-2 bg-light text-primary">
+        <h2>Log in</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-dark">Log in</button>
+        </form>
+    </div>
+{% endblock content %}

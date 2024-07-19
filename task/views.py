@@ -1,16 +1,17 @@
-from django.shortcuts import render
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.views.generic import ListView
 
 from task.forms import TaskForm
 from task.models import Task
-from django.views.generic import DetailView, ListView
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 
 
-class IndexView(ListView):
+class IndexView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = Task
     template_name = "task/index.html"
     context_object_name = 'tasks'
+    permission_required = 'task.task_management'
 
     def get_context_data(self, **kwargs):
         context = super(IndexView, self).get_context_data(**kwargs)
